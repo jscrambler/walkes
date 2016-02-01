@@ -33,7 +33,7 @@ function checkProps(node, recurse) {
 	var mapped = {};
 	Object.keys(node).forEach(function (key) {
 		// FS: Avoiding circular references
-		if (['parent', 'scope', 'directives', 'errors', 'loc', 'range'].indexOf(key) === -1) {
+		if (['parent', 'scope', 'handlers', 'directives', 'errors', 'loc', 'range'].indexOf(key) === -1) {
 			var prop = node[key];
 			var ret = prop;
 			if (Array.isArray(prop)) {

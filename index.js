@@ -32,15 +32,18 @@ function walker(astNode, functionTable, offset) {
 function checkProps(node, recurse) {
 	var mapped = {};
 	Object.keys(node).forEach(function (key) {
-		var prop = node[key];
-		var ret = prop;
-		if (Array.isArray(prop)) {
-			ret = prop.map(recurse);
-		} else {
-			ret = recurse(prop);
-		}
+		// FS: Avoiding circular references
+		if (['parent', 'scope', 'directives', 'errors', 'loc', 'range'].indexOf(key) === -1) {
+			var prop = node[key];
+			var ret = prop;
+			if (Array.isArray(prop)) {
+				ret = prop.map(recurse);
+			} else {
+				ret = recurse(prop);
+			}
 
-		mapped[key] = ret;
+			mapped[key] = ret;
+		}
 	});
 	return mapped;
 }
